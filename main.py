@@ -1,6 +1,18 @@
 from Tkinter import *
+import random
 
 top = Tk()
+
+def random_answer():
+    return word_list[random.randint(0,len(word_list)-1)]
+
+def make_list():
+    word_list = []
+    with open('english-words.10') as f:
+        for line in f:
+            line = line[:-1]
+            word_list.append(line)
+    return word_list
 
 def make_guess():
     string = guess.get()
@@ -67,7 +79,7 @@ def loser():
 
 def reset_game(window=None):
     misses.set(0)
-    answer.set('hangman')
+    answer.set(random_answer())
     displayed_answer.set(hyphonify(answer.get()))
     GuessedVar.set('Guessed: ')
     global canvas_id_list
@@ -80,6 +92,9 @@ def reset_game(window=None):
 def hyphonify(string):
     return_string = '-'*(len(string))
     return return_string
+
+global word_list
+word_list = make_list()
 
 global canvas_id_list
 canvas_id_list = []
